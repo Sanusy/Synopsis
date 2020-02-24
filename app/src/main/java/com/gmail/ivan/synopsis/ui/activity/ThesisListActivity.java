@@ -3,7 +3,6 @@ package com.gmail.ivan.synopsis.ui.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -108,7 +107,6 @@ public class ThesisListActivity extends BaseActivity<ThesisListPresenter>
     @Override
     protected ThesisListPresenter createPresenter() {
         ThesisListRouter router = new ThesisListRouter(this);
-        Log.d(TAG, "createPresenter: Intent null " + (getIntent() == null));
         return new ThesisListPresenter(router,
                                        AppDataBaseSingleton.get(this)
                                                            .getDataBase(),
@@ -137,8 +135,8 @@ public class ThesisListActivity extends BaseActivity<ThesisListPresenter>
                .setVisibility(View.GONE);
     }
 
-    public static Intent newIntent(@NonNull Context pacageContext, @NonNull String themeTitle) {
-        Intent intent = new Intent(pacageContext, ThesisListActivity.class);
+    public static Intent newIntent(@NonNull Context packageContext, @NonNull String themeTitle) {
+        Intent intent = new Intent(packageContext, ThesisListActivity.class);
         intent.putExtra(THEME_NAME, themeTitle);
         return intent;
     }

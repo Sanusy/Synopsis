@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -21,6 +22,8 @@ import androidx.annotation.Nullable;
 
 public class NewThemeDialog extends BaseDialog<NewThemePresenter> implements NewThemeDialogContract.View {
 
+    private static final String TAG = NewThemeDialog.class.getSimpleName();
+
     @Nullable
     private NewThemeDialogListener newThemeDialogListener;
 
@@ -31,7 +34,7 @@ public class NewThemeDialog extends BaseDialog<NewThemePresenter> implements New
         try{
             newThemeDialogListener = (ThemeListActivity) context;
         }catch (ClassCastException exception){
-            exception.printStackTrace();
+            Log.e(TAG, "onAttach: ", exception);
         }
 
     }

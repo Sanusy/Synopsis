@@ -50,9 +50,7 @@ public class ThesisListPresenter
                 Objects.requireNonNull(getView())
                        .showThesisList(thesisList);
             }
-        } catch (ExecutionException e) {
-            Log.e(TAG, "loadThesisList: ", e);
-        } catch (InterruptedException e) {
+        } catch (ExecutionException | InterruptedException e) {
             Log.e(TAG, "loadThesisList: ", e);
         }
     }
@@ -63,7 +61,7 @@ public class ThesisListPresenter
 
         new AddThesisTask(dataBase).execute(thesis);
 
-        getRouter().openNewThesis(thesis);
+        getRouter().openThesis(thesis);
     }
 
     @Override
@@ -84,29 +82,28 @@ public class ThesisListPresenter
         new AddThesisTask(dataBase).execute(recentlyDeletedThesis);
         try {
             List<Thesis> thesisList = new LoadThesisListTask(dataBase).execute(themeName)
-                                                                   .get();
+                                                                      .get();
 
             Objects.requireNonNull(getView())
                    .showThesisList(thesisList);
-        } catch (ExecutionException e) {
-            Log.e(TAG, "loadThemeList: ", e);
-        } catch (InterruptedException e) {
+        } catch (ExecutionException | InterruptedException e) {
             Log.e(TAG, "loadThemeList: ", e);
         }
     }
 
-    private static class DeleteThesisTask extends AsyncTask<Thesis, Void, Void>{
+    private static class DeleteThesisTask extends AsyncTask<Thesis, Void, Void> {
 
         @NonNull
         private final AppDataBase dataBase;
 
-        private DeleteThesisTask(@NonNull AppDataBase dataBase) {
+        DeleteThesisTask(@NonNull AppDataBase dataBase) {
             this.dataBase = dataBase;
         }
 
         @Override
         protected Void doInBackground(Thesis... theses) {
-            dataBase.thesisRepository().deleteThesis(theses[0]);
+            dataBase.thesisRepository()
+                    .deleteThesis(theses[0]);
             return null;
         }
     }
@@ -116,13 +113,14 @@ public class ThesisListPresenter
         @NonNull
         private final AppDataBase dataBase;
 
-        public AddThesisTask(@NonNull AppDataBase dataBase) {
+        AddThesisTask(@NonNull AppDataBase dataBase) {
             this.dataBase = dataBase;
         }
 
         @Override
         protected Void doInBackground(Thesis... theses) {
-            dataBase.thesisRepository().addThesis(theses[0]);
+            dataBase.thesisRepository()
+                    .addThesis(theses[0]);
             return null;
         }
     }
@@ -132,7 +130,7 @@ public class ThesisListPresenter
         @NonNull
         private final AppDataBase dataBase;
 
-        public LoadThesisListTask(@NonNull AppDataBase dataBase) {
+        LoadThesisListTask(@NonNull AppDataBase dataBase) {
             this.dataBase = dataBase;
         }
 

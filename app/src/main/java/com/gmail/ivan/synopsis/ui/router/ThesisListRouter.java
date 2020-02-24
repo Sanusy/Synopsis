@@ -24,16 +24,6 @@ public class ThesisListRouter implements ThesisListContract.Router {
     public void openThesis(@NonNull Thesis thesis) {
         Intent intent =
                 ThesisPagerActivity.newIntent(activity, thesis.getId(), thesis.getThemeName());
-        intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-
-        activity.startActivity(intent);
-    }
-
-    @Override
-    public void openNewThesis(@NonNull Thesis thesis) {
-        Intent intent =
-                ThesisEditActivity.newIntent(activity, thesis.getId(), thesis.getThemeName());
-        intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
 
         activity.startActivity(intent);
     }

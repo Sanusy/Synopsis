@@ -16,7 +16,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-public abstract class BaseFragment<P extends BasePresenter> extends Fragment implements BaseContract.View {
+public abstract class BaseFragment<P extends BasePresenter>
+        extends Fragment
+        implements BaseContract.View {
 
     private static final String TAG = BaseFragment.class.getSimpleName();
 
@@ -49,7 +51,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
         return Objects.requireNonNull(presenter);
     }
 
-    public BaseActivity requireBaseActivity(){
+    public BaseActivity requireBaseActivity() {
         return (BaseActivity) requireActivity();
     }
 

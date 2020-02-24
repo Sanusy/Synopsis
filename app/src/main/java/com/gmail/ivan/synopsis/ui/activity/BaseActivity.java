@@ -11,7 +11,6 @@ import java.util.Objects;
 import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
 
 public abstract class BaseActivity<P extends BasePresenter>
@@ -37,6 +36,7 @@ public abstract class BaseActivity<P extends BasePresenter>
         setContentView(getLayoutRes());
         setTitle(getToolbarTitle());
         presenter = createPresenter();
+        getPresenter().attach(this);
     }
 
     @LayoutRes
@@ -45,14 +45,8 @@ public abstract class BaseActivity<P extends BasePresenter>
     public abstract String getToolbarTitle();
 
     @Override
-    protected void onStart() {
-        super.onStart();
-        getPresenter().attach(this);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
+    protected void onDestroy() {
+        super.onDestroy();
         getPresenter().detach();
     }
 

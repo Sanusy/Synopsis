@@ -1,6 +1,5 @@
 package com.gmail.ivan.synopsis.ui.adapter;
 
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 

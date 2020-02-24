@@ -47,7 +47,7 @@ public abstract class BaseRecyclerAdapter<E> extends RecyclerView.Adapter<BaseVi
         return entityList.size();
     }
 
-    public E getItem(int position){
+    public E getItem(int position) {
         return entityList.get(position);
     }
 

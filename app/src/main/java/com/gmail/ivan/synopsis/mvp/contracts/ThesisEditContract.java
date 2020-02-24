@@ -18,12 +18,9 @@ public interface ThesisEditContract {
         void saveThesis(@NonNull Thesis thesis);
 
         void loadNewThesis(@NonNull String themeName);
-
-        void back(@NonNull Thesis thesis);
     }
 
     interface Router extends BaseContract.Router {
 
-        void back(@NonNull Thesis thesis);
     }
 }
