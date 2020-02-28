@@ -34,9 +34,7 @@ public class ThesisDetailsPresenter
                                                         .get();
             Objects.requireNonNull(getView())
                    .showThesis(thesis);
-        } catch (ExecutionException e) {
-            Log.e(TAG, "loadThesis: ", e);
-        } catch (InterruptedException e) {
+        } catch (ExecutionException | InterruptedException e) {
             Log.e(TAG, "loadThesis: ", e);
         }
     }
@@ -51,7 +49,7 @@ public class ThesisDetailsPresenter
         @NonNull
         private final AppDataBase dataBase;
 
-        public LoadThesisTask(@NonNull AppDataBase dataBase) {
+        LoadThesisTask(@NonNull AppDataBase dataBase) {
             this.dataBase = dataBase;
         }
 

@@ -22,7 +22,6 @@ public class ThesisDetailsRouter implements ThesisDetailsContract.Router {
     public void showEditThesis(@NonNull Thesis thesis) {
         Intent intent =
                 ThesisEditActivity.newIntent(activity, thesis.getId(), thesis.getThemeName());
-        intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
 
         activity.startActivity(intent);
     }

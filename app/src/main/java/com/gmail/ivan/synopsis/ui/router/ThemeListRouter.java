@@ -31,7 +31,8 @@ public class ThemeListRouter implements ThemeListContract.Router {
     @Override
     public void openNewTheme() {
         FragmentManager fragmentManager = activity.getSupportFragmentManager();
-        NewThemeDialog.newInstance().show(fragmentManager, TAG);
+        NewThemeDialog.newInstance()
+                      .show(fragmentManager, TAG);
     }
 
     @Override

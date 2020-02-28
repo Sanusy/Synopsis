@@ -45,9 +45,7 @@ public class ThemeListPresenter
                 Objects.requireNonNull(getView())
                        .showThemeList(themeList);
             }
-        } catch (ExecutionException e) {
-            Log.e(TAG, "loadThemeList: ", e);
-        } catch (InterruptedException e) {
+        } catch (ExecutionException | InterruptedException e) {
             Log.e(TAG, "loadThemeList: ", e);
         }
     }
@@ -79,9 +77,7 @@ public class ThemeListPresenter
 
             Objects.requireNonNull(getView())
                    .showThemeList(themeList);
-        } catch (ExecutionException e) {
-            Log.e(TAG, "loadThemeList: ", e);
-        } catch (InterruptedException e) {
+        } catch (ExecutionException | InterruptedException e) {
             Log.e(TAG, "loadThemeList: ", e);
         }
     }
@@ -91,7 +87,7 @@ public class ThemeListPresenter
         @NonNull
         private final AppDataBase dataBase;
 
-        public AddRecentlyDeletedTask(@NonNull AppDataBase dataBase) {
+        AddRecentlyDeletedTask(@NonNull AppDataBase dataBase) {
             this.dataBase = dataBase;
         }
 
@@ -108,7 +104,7 @@ public class ThemeListPresenter
         @NonNull
         private final AppDataBase dataBase;
 
-        public DeleteThemeTask(@NonNull AppDataBase dataBase) {
+        DeleteThemeTask(@NonNull AppDataBase dataBase) {
             this.dataBase = dataBase;
         }
 
@@ -125,7 +121,7 @@ public class ThemeListPresenter
         @NonNull
         private final AppDataBase dataBase;
 
-        public LoadThemeListTask(@NonNull AppDataBase dataBase) {
+        LoadThemeListTask(@NonNull AppDataBase dataBase) {
             this.dataBase = dataBase;
         }
 
@@ -138,7 +134,6 @@ public class ThemeListPresenter
                 theme.setThesisCount(dataBase.thesisRepository()
                                              .getThesisList(theme.getThemeName())
                                              .size());
-                Log.d(TAG, "doInBackground: " + theme.getThesisCount());
             }
 
             return themeList;

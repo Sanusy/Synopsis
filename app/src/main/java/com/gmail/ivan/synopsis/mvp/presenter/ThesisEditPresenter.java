@@ -37,9 +37,7 @@ public class ThesisEditPresenter
 
             Objects.requireNonNull(getView())
                    .showThesis(thesis);
-        } catch (ExecutionException e) {
-            Log.e(TAG, "loadThesis: ", e);
-        } catch (InterruptedException e) {
+        } catch (ExecutionException | InterruptedException e) {
             Log.e(TAG, "loadThesis: ", e);
         }
     }
@@ -54,16 +52,9 @@ public class ThesisEditPresenter
 
             Objects.requireNonNull(getView())
                    .showThesis(thesis);
-        } catch (ExecutionException e) {
-            Log.e(TAG, "loadThesis: ", e);
-        } catch (InterruptedException e) {
+        } catch (ExecutionException | InterruptedException e) {
             Log.e(TAG, "loadThesis: ", e);
         }
-    }
-
-    @Override
-    public void back(@NonNull Thesis thesis) {
-        getRouter().back(thesis);
     }
 
     @Override

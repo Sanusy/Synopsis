@@ -14,8 +14,6 @@ import androidx.annotation.Nullable;
 
 public class ThesisViewHolder extends BaseViewHolder<Thesis> implements View.OnClickListener {
 
-    public static final int DEST_STR_LENGTH = 50;
-
     @NonNull
     private final TextView thesisName;
 

@@ -28,11 +28,9 @@
         <emptyLine />
       </value>
     </option>
-    <option name="JD_DO_NOT_WRAP_ONE_LINE_COMMENTS" value="true" />
     <option name="JSP_PREFER_COMMA_SEPARATED_IMPORT_LIST" value="true" />
     <option name="WRAP_COMMENTS" value="true" />
     <AndroidXmlCodeStyleSettings>
-      <option name="ARRANGEMENT_SETTINGS_MIGRATED_TO_191" value="true" />
       <option name="LAYOUT_SETTINGS">
         <value>
           <option name="INSERT_LINE_BREAK_BEFORE_NAMESPACE_DECLARATION" value="true" />

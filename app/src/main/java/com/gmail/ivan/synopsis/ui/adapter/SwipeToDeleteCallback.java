@@ -2,10 +2,8 @@ package com.gmail.ivan.synopsis.ui.adapter;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
-import android.util.Log;
 import android.view.View;
 
 import com.gmail.ivan.synopsis.R;
@@ -42,7 +40,8 @@ public class SwipeToDeleteCallback extends ItemTouchHelper.SimpleCallback {
 
         background = new ColorDrawable(ContextCompat.getColor(context, R.color.colorAccent));
 
-        density = context.getResources().getDisplayMetrics().density;
+        density = context.getResources()
+                         .getDisplayMetrics().density;
     }
 
     @Override
@@ -76,7 +75,7 @@ public class SwipeToDeleteCallback extends ItemTouchHelper.SimpleCallback {
 
         if (dX > 0) { // Swiping to the right
             int iconLeft = itemView.getLeft() + iconMargin;
-            int iconRight = itemView.getLeft() + iconMargin  + icon.getIntrinsicWidth();
+            int iconRight = itemView.getLeft() + iconMargin + icon.getIntrinsicWidth();
             icon.setBounds(iconLeft, iconTop, iconRight, iconBottom);
 
             background.setBounds(itemView.getLeft(), itemView.getTop(),

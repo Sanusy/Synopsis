@@ -6,7 +6,6 @@ import com.gmail.ivan.synopsis.data.database.AppDataBase;
 import com.gmail.ivan.synopsis.data.entity.Theme;
 import com.gmail.ivan.synopsis.mvp.contracts.NewThemeDialogContract;
 
-import java.util.Date;
 import java.util.Objects;
 
 import androidx.annotation.NonNull;
@@ -34,23 +33,23 @@ public class NewThemePresenter
         }
 
         Theme theme = new Theme(themeName);
-
-        new AddThemeListTask(dataBase).execute(theme);
+        new AddThemeTask(dataBase).execute(theme);
     }
 
-    private static class AddThemeListTask extends AsyncTask<Theme, Void, Void> {
+    private static class AddThemeTask extends AsyncTask<Theme, Void, Void> {
 
         @NonNull
         private final AppDataBase dataBase;
 
-        public AddThemeListTask(@NonNull AppDataBase dataBase) {
+        AddThemeTask(@NonNull AppDataBase dataBase) {
             this.dataBase = dataBase;
         }
 
         @Override
         protected Void doInBackground(Theme... themes) {
-            if(dataBase.themeRepository().getAllThemes().contains(themes[0])){
-                // TODO: 2/12/2020 Add showing toast using interface that implemented by NewThemeDialog
+            if (dataBase.themeRepository()
+                        .getAllThemes()
+                        .contains(themes[0])) {
                 return null;
             }
 

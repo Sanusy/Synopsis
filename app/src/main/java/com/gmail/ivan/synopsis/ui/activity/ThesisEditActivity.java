@@ -3,7 +3,6 @@ package com.gmail.ivan.synopsis.ui.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -56,19 +55,23 @@ public class ThesisEditActivity extends BaseActivity<ThesisEditPresenter>
 
         saveEditFab = findViewById(R.id.save_edit_fab);
         saveEditFab.setOnClickListener(view -> {
-            Objects.requireNonNull(thesis)
-                   .setThesisName(Objects.requireNonNull(thesisTitle)
-                                         .getText()
-                                         .toString());
-
-            Objects.requireNonNull(thesis)
-                   .setThesisDescription(Objects.requireNonNull(thesisDescription)
-                                                .getText()
-                                                .toString());
-
-            getPresenter().saveThesis(thesis);
-            getPresenter().back(Objects.requireNonNull(thesis));
+            saveAndQuit();
         });
+    }
+
+    private void saveAndQuit() {
+        Objects.requireNonNull(thesis)
+               .setThesisName(Objects.requireNonNull(thesisTitle)
+                                     .getText()
+                                     .toString());
+
+        Objects.requireNonNull(thesis)
+               .setThesisDescription(Objects.requireNonNull(thesisDescription)
+                                            .getText()
+                                            .toString());
+
+        getPresenter().saveThesis(thesis);
+        finish();
     }
 
     @Override
@@ -78,7 +81,7 @@ public class ThesisEditActivity extends BaseActivity<ThesisEditPresenter>
         int thesisId = getIntent().getIntExtra(THESIS_ID, 0);
         if (thesisId > 0) {
             getPresenter().loadThesis(thesisId);
-        }else {
+        } else {
             getPresenter().loadNewThesis(Objects.requireNonNull(getIntent().getStringExtra(
                     THEME_NAME)));
         }
@@ -86,17 +89,12 @@ public class ThesisEditActivity extends BaseActivity<ThesisEditPresenter>
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-
-        getPresenter().saveThesis(Objects.requireNonNull(thesis));
-        getPresenter().back(Objects.requireNonNull(thesis));
+        saveAndQuit();
     }
 
     @Override
     public void showThesis(@NonNull Thesis thesis) {
         this.thesis = thesis;
-        Log.d("OLOLO", "showThesis: " + thesis.getThesisName());
-        Log.d("OLOLO", "showThesis: " + (thesisTitle == null));
         Objects.requireNonNull(thesisTitle)
                .setText(thesis.getThesisName());
         Objects.requireNonNull(thesisDescription)

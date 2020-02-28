@@ -34,12 +34,11 @@ public class ThesisPagerPresenter
     @Override
     public void loadThesisList() {
         try {
-            List<Thesis> thesisList = new LoadThesisListTask(dataBase).execute(themeName).get();
+            List<Thesis> thesisList = new LoadThesisListTask(dataBase).execute(themeName)
+                                                                      .get();
             Objects.requireNonNull(getView())
                    .setThesisList(thesisList);
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
+        } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
     }

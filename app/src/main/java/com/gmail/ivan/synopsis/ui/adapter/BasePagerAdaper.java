@@ -13,7 +13,7 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 public abstract class BasePagerAdaper<E> extends FragmentStatePagerAdapter {
 
     @NonNull
-    private List<E> entityList;
+    protected List<E> entityList;
 
     public BasePagerAdaper(@NonNull FragmentManager fm) {
         super(fm);
@@ -29,10 +29,10 @@ public abstract class BasePagerAdaper<E> extends FragmentStatePagerAdapter {
     @NonNull
     @Override
     public BaseFragment getItem(int position) {
-        return createFragment(entityList.get(position));
+        return createFragment(position);
     }
 
-    protected abstract BaseFragment createFragment(@NonNull E entity);
+    protected abstract BaseFragment createFragment(int position);
 
     @Override
     public int getCount() {

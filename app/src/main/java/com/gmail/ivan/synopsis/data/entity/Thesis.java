@@ -21,6 +21,9 @@ public class Thesis {
     private String thesisDescription;
 
     @Ignore
+    private boolean newThesis;
+
+    @Ignore
     public Thesis(@NonNull String themeName) {
         this.themeName = themeName;
         thesisName = "New thesis";
@@ -68,5 +71,13 @@ public class Thesis {
 
     public void setThemeName(@NonNull String themeName) {
         this.themeName = themeName;
+    }
+
+    public boolean isNewThesis() {
+        return newThesis;
+    }
+
+    public void setNewThesis(boolean newThesis) {
+        this.newThesis = newThesis;
     }
 }
