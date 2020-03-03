@@ -1,12 +1,10 @@
 package com.gmail.ivan.synopsis.ui.router;
 
 import android.content.Intent;
-import android.util.Log;
 
 import com.gmail.ivan.synopsis.data.entity.Thesis;
 import com.gmail.ivan.synopsis.mvp.contracts.ThesisListContract;
 import com.gmail.ivan.synopsis.ui.activity.BaseActivity;
-import com.gmail.ivan.synopsis.ui.activity.ThesisEditActivity;
 import com.gmail.ivan.synopsis.ui.activity.ThesisPagerActivity;
 
 import androidx.annotation.NonNull;

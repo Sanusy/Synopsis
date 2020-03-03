@@ -13,4 +13,13 @@
     <!-- snackbar text -->
     <string name="undo_delete_text">Undo delete</string>
     <string name="undo_text">UNDO</string>
+
+    <!-- Thesis details strings   -->
+    <string name="thesis_description_hint">Thesis description</string>
+    <string name="enter_thesis_title_hint">Enter thesis title.</string>
+
+    <!-- Save edit strings   -->
+    <string name="save_edit_title">Save changes?</string>
+    <string name="save_changes">Save</string>
+    <string name="discard_changes">Discard</string>
 </resources>

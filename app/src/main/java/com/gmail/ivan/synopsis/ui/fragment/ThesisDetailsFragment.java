@@ -1,8 +1,9 @@
 package com.gmail.ivan.synopsis.ui.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.TextView;
+import android.widget.EditText;
 
 import com.gmail.ivan.synopsis.R;
 import com.gmail.ivan.synopsis.data.database.AppDataBaseSingleton;
@@ -18,35 +19,37 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 public class ThesisDetailsFragment extends BaseFragment<ThesisDetailsPresenter>
-        implements ThesisDetailsContract.View {
+        implements ThesisDetailsContract.View, SaveEditDialog.SaveEditDialogListener {
 
     private static final String THESIS_ID = "thesis_id";
 
     private static final String IS_NEW_THESIS = "is_thesis_new";
 
     @Nullable
-    private TextView thesisTitle;
+    private EditText thesisTitle;
 
     @Nullable
-    private TextView thesisDescription;
+    private EditText thesisDescription;
 
     @Nullable
     private FloatingActionButton editFab;
 
     @Nullable
+    private View layout;
+
+    @Nullable
+    private Callbacks callbacks;
+
+    @Nullable
     private Thesis thesis;
 
-    private boolean newThesis;
-
-    private boolean onCreateCalled;
+    private boolean editMode = true;
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
 
-        newThesis = Objects.requireNonNull(getArguments())
-                           .getBoolean(IS_NEW_THESIS);
-        onCreateCalled = true;
+        callbacks = (Callbacks) context;
     }
 
     @Override
@@ -54,13 +57,37 @@ public class ThesisDetailsFragment extends BaseFragment<ThesisDetailsPresenter>
         super.onViewCreated(view, savedInstanceState);
 
         thesisTitle = view.findViewById(R.id.thesis_title);
+        thesisTitle.setOnClickListener(v -> {
+            getPresenter().showEdit();
+        });
 
         thesisDescription = view.findViewById(R.id.thesis_details_description);
+        thesisDescription.setOnClickListener(v -> {
+            getPresenter().showEdit();
+        });
+
+        layout = view.findViewById(R.id.thesis_details_layout);
+        layout.setOnClickListener(v -> {
+            getPresenter().showEdit();
+        });
 
         editFab = view.findViewById(R.id.edit_thesis_fab);
         editFab.setOnClickListener(v -> {
-            getPresenter().showEditThesis(Objects.requireNonNull(thesis));
+            refreshThesis();
+
+            getPresenter().saveChanges();
         });
+    }
+
+    private void refreshThesis() {
+        Objects.requireNonNull(thesis)
+               .setThesisName(Objects.requireNonNull(thesisTitle)
+                                     .getText()
+                                     .toString());
+
+        thesis.setThesisDescription(Objects.requireNonNull(thesisDescription)
+                                           .getText()
+                                           .toString());
     }
 
     @Override
@@ -69,20 +96,79 @@ public class ThesisDetailsFragment extends BaseFragment<ThesisDetailsPresenter>
 
         getPresenter().loadThesis(Objects.requireNonNull(getArguments())
                                          .getInt(THESIS_ID));
-
-        if (newThesis && onCreateCalled) {
-            onCreateCalled = false;
-            getPresenter().showEditThesis(Objects.requireNonNull(thesis));
+        boolean newThesis = getArguments().getBoolean(IS_NEW_THESIS);
+        if (!newThesis) {
+            getPresenter().saveChanges();
         }
     }
 
     @Override
-    public void showThesis(@NonNull Thesis thesis) {
+    public void loadThesis(@NonNull Thesis thesis) {
         this.thesis = thesis;
         Objects.requireNonNull(thesisTitle)
                .setText(thesis.getThesisName());
         Objects.requireNonNull(thesisDescription)
                .setText(thesis.getThesisDescription());
+    }
+
+    @Override
+    public void showThesisDetails() {
+        editMode = false;
+        Objects.requireNonNull(editFab)
+               .hide();
+        Objects.requireNonNull(callbacks)
+               .enableSwipe();
+
+        Objects.requireNonNull(thesisTitle)
+               .setEnabled(false);
+        Objects.requireNonNull(thesisDescription)
+               .setEnabled(false);
+    }
+
+    @Override
+    public void showEditThesis() {
+        editMode = true;
+        Objects.requireNonNull(editFab)
+               .show();
+        Objects.requireNonNull(callbacks)
+               .disableSwipe();
+
+        Objects.requireNonNull(thesisTitle)
+               .setEnabled(true);
+        Objects.requireNonNull(thesisDescription)
+               .setEnabled(true);
+    }
+
+    public void onBackPressed() {
+        String actualTitle = Objects.requireNonNull(thesisTitle)
+                                    .getText()
+                                    .toString();
+        String actualDescription = Objects.requireNonNull(thesisDescription)
+                                          .getText()
+                                          .toString();
+
+        boolean thesisChanged = !(actualTitle.equals(Objects.requireNonNull(thesis)
+                                                            .getThesisName())
+                && actualDescription.equals(thesis.getThesisDescription()));
+
+        if (editMode && thesisChanged) {
+            getPresenter().showConfirmChanges();
+        } else {
+            getPresenter().back();
+        }
+    }
+
+    @Override
+    public void onDialogPositiveClick(@NonNull BaseDialog dialog) {
+        refreshThesis();
+
+        getPresenter().saveChanges();
+        getPresenter().back();
+    }
+
+    @Override
+    public void onDialogNegativeClick(@NonNull BaseDialog dialog) {
+        getPresenter().back();
     }
 
     @Override
@@ -93,7 +179,7 @@ public class ThesisDetailsFragment extends BaseFragment<ThesisDetailsPresenter>
     @NonNull
     @Override
     protected ThesisDetailsPresenter createPresenter() {
-        ThesisDetailsRouter router = new ThesisDetailsRouter(requireBaseActivity());
+        ThesisDetailsRouter router = new ThesisDetailsRouter(this);
         ThesisDetailsPresenter presenter = new ThesisDetailsPresenter(router,
                                                                       AppDataBaseSingleton.get(
                                                                               requireContext())
@@ -102,7 +188,6 @@ public class ThesisDetailsFragment extends BaseFragment<ThesisDetailsPresenter>
     }
 
     public static ThesisDetailsFragment newInstance(int thesisId, boolean newThesis) {
-
         Bundle args = new Bundle();
         args.putInt(THESIS_ID, thesisId);
         args.putBoolean(IS_NEW_THESIS, newThesis);
@@ -110,5 +195,12 @@ public class ThesisDetailsFragment extends BaseFragment<ThesisDetailsPresenter>
         ThesisDetailsFragment fragment = new ThesisDetailsFragment();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    public interface Callbacks {
+
+        void disableSwipe();
+
+        void enableSwipe();
     }
 }

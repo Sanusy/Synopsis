@@ -12,6 +12,8 @@ import com.gmail.ivan.synopsis.data.entity.Thesis;
 import com.gmail.ivan.synopsis.mvp.contracts.ThesisPagerContract;
 import com.gmail.ivan.synopsis.mvp.presenter.ThesisPagerPresenter;
 import com.gmail.ivan.synopsis.ui.adapter.ThesisPagerAdapter;
+import com.gmail.ivan.synopsis.ui.adapter.ThesisViewPager;
+import com.gmail.ivan.synopsis.ui.fragment.ThesisDetailsFragment;
 import com.gmail.ivan.synopsis.ui.router.ThesisPagerRouter;
 
 import java.util.List;
@@ -19,10 +21,9 @@ import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.viewpager.widget.ViewPager;
 
 public class ThesisPagerActivity extends BaseActivity<ThesisPagerPresenter>
-        implements ThesisPagerContract.View {
+        implements ThesisPagerContract.View, ThesisDetailsFragment.Callbacks {
 
     private static final String THESIS_ID = "thesis_id";
 
@@ -32,7 +33,7 @@ public class ThesisPagerActivity extends BaseActivity<ThesisPagerPresenter>
     private ProgressBar progressBar;
 
     @Nullable
-    private ViewPager viewPager;
+    private ThesisViewPager viewPager;
 
     @Nullable
     private ThesisPagerAdapter thesisPagerAdapter;
@@ -86,6 +87,16 @@ public class ThesisPagerActivity extends BaseActivity<ThesisPagerPresenter>
     }
 
     @Override
+    public void onBackPressed() {
+        ThesisDetailsFragment currentFragment =
+                (ThesisDetailsFragment) Objects.requireNonNull(thesisPagerAdapter)
+                                               .getCurrentFragment();
+
+        Objects.requireNonNull(currentFragment)
+               .onBackPressed();
+    }
+
+    @Override
     public int getLayoutRes() {
         return R.layout.activity_thesis_pager;
     }
@@ -115,5 +126,17 @@ public class ThesisPagerActivity extends BaseActivity<ThesisPagerPresenter>
         intent.putExtra(THEME_NAME, themeName);
 
         return intent;
+    }
+
+    @Override
+    public void disableSwipe() {
+        Objects.requireNonNull(viewPager)
+               .setSwipeEnabled(false);
+    }
+
+    @Override
+    public void enableSwipe() {
+        Objects.requireNonNull(viewPager)
+               .setSwipeEnabled(true);
     }
 }
