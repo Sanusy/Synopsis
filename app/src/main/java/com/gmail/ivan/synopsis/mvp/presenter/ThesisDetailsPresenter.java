@@ -11,6 +11,7 @@ import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 public class ThesisDetailsPresenter
         extends BasePresenter<ThesisDetailsContract.View, ThesisDetailsContract.Router>
@@ -21,6 +22,9 @@ public class ThesisDetailsPresenter
     @NonNull
     private final AppDataBase dataBase;
 
+    @Nullable
+    private Thesis thesis;
+
     public ThesisDetailsPresenter(@NonNull ThesisDetailsContract.Router router,
                                   @NonNull AppDataBase dataBase) {
         super(router);
@@ -30,18 +34,48 @@ public class ThesisDetailsPresenter
     @Override
     public void loadThesis(int thesisId) {
         try {
-            Thesis thesis = new LoadThesisTask(dataBase).execute(thesisId)
-                                                        .get();
+            thesis = new LoadThesisTask(dataBase).execute(thesisId)
+                                                 .get();
             Objects.requireNonNull(getView())
-                   .showThesis(thesis);
+                   .loadThesis(Objects.requireNonNull(thesis));
         } catch (ExecutionException | InterruptedException e) {
             Log.e(TAG, "loadThesis: ", e);
         }
     }
 
     @Override
-    public void showEditThesis(@NonNull Thesis thesis) {
-        getRouter().showEditThesis(thesis);
+    public void showEdit() {
+        Objects.requireNonNull(getView())
+               .showEditThesis();
+    }
+
+    @Override
+    public void saveChanges() {
+        new UpdateThesisTask(dataBase).execute(thesis);
+        Objects.requireNonNull(getView())
+               .showThesisDetails();
+    }
+
+    @Override
+    public void showConfirmChanges() {
+        getRouter().showConfirmChanges();
+    }
+
+    private static class UpdateThesisTask extends AsyncTask<Thesis, Void, Void> {
+
+        @NonNull
+        private final AppDataBase dataBase;
+
+        UpdateThesisTask(@NonNull AppDataBase dataBase) {
+            this.dataBase = dataBase;
+        }
+
+        @Override
+        protected Void doInBackground(Thesis... theses) {
+            dataBase.thesisRepository()
+                    .updateThesis(theses[0]);
+            return null;
+        }
     }
 
     private static class LoadThesisTask extends AsyncTask<Integer, Void, Thesis> {

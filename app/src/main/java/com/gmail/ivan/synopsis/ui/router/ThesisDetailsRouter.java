@@ -1,33 +1,35 @@
 package com.gmail.ivan.synopsis.ui.router;
 
-import android.content.Intent;
-
-import com.gmail.ivan.synopsis.data.entity.Thesis;
 import com.gmail.ivan.synopsis.mvp.contracts.ThesisDetailsContract;
-import com.gmail.ivan.synopsis.ui.activity.BaseActivity;
-import com.gmail.ivan.synopsis.ui.activity.ThesisEditActivity;
+import com.gmail.ivan.synopsis.ui.fragment.BaseFragment;
+import com.gmail.ivan.synopsis.ui.fragment.SaveEditDialog;
+
+import java.util.Objects;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentManager;
 
 public class ThesisDetailsRouter implements ThesisDetailsContract.Router {
 
-    @NonNull
-    private final BaseActivity activity;
+    private static final String TAG = ThesisDetailsRouter.class.getSimpleName();
 
-    public ThesisDetailsRouter(@NonNull BaseActivity activity) {
-        this.activity = activity;
+    @NonNull
+    private final BaseFragment fragment;
+
+    public ThesisDetailsRouter(@NonNull BaseFragment fragment) {
+        this.fragment = fragment;
     }
 
     @Override
-    public void showEditThesis(@NonNull Thesis thesis) {
-        Intent intent =
-                ThesisEditActivity.newIntent(activity, thesis.getId(), thesis.getThemeName());
-
-        activity.startActivity(intent);
+    public void showConfirmChanges() {
+        FragmentManager fragmentManager = fragment.getChildFragmentManager();
+        SaveEditDialog.newInstance()
+                      .show(Objects.requireNonNull(fragmentManager), TAG);
     }
 
     @Override
     public void back() {
-        activity.finish();
+        fragment.requireBaseActivity()
+                .finish();
     }
 }

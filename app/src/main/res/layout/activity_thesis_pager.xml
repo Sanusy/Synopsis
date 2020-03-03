@@ -7,10 +7,10 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <androidx.viewpager.widget.ViewPager
+    <com.gmail.ivan.synopsis.ui.adapter.ThesisViewPager
         android:id="@+id/thesis_viewpager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
 
     <ProgressBar
         android:id="@+id/thesis_pager_proressbar"
