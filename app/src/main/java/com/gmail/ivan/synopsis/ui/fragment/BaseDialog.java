@@ -61,7 +61,7 @@ public abstract class BaseDialog<P extends BasePresenter> extends DialogFragment
     }
 
     @NonNull
-    private BaseActivity requireBaseActivity() {
+    public BaseActivity requireBaseActivity() {
         return (BaseActivity) requireActivity();
     }
 }

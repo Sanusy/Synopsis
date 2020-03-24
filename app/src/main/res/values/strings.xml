@@ -3,14 +3,11 @@
 
     <!-- Theme List Strings -->
     <string name="theme_empty_list">There is no themes</string>
-    <string name="add_theme">Add Theme</string>
-    <string name="new_theme_title">Enter new theme title:</string>
-    <string name="empty_theme_title">Empty theme title!</string>
 
     <!-- Thesis List Strings -->
     <string name="thesis_empty_list">There is no theses</string>
 
-    <!-- snackbar text -->
+    <!-- Snackbar text -->
     <string name="undo_delete_text">Undo delete</string>
     <string name="undo_text">UNDO</string>
 
@@ -18,8 +15,23 @@
     <string name="thesis_description_hint">Thesis description</string>
     <string name="enter_thesis_title_hint">Enter thesis title.</string>
 
-    <!-- Save edit strings   -->
+    <!-- SaveEditDialog strings   -->
     <string name="save_edit_title">Save changes?</string>
-    <string name="save_changes">Save</string>
-    <string name="discard_changes">Discard</string>
+
+    <!-- Dialog buttons text   -->
+    <string name="save">SAVE</string>
+    <string name="discard">DISCARD</string>
+    <string name="cancel">CANCEL</string>
+    <string name="create">CREATE</string>
+
+    <!-- NewThemeDialog strings   -->
+    <string name="new_topic_name_hint">Topic name</string>
+    <string name="enter_topic_name">Enter topic name</string>
+    <string name="empty_theme_title">Empty theme title!</string>
+    <string name="already_such_title">There already such field</string>
+
+    <!-- NewThesisDialog strings   -->
+    <string name="enter_thesis_name_label">Enter thesis name</string>
+    <string name="thesis_name_hint">Thesis name</string>
+
 </resources>

@@ -1,7 +1,13 @@
 package com.gmail.ivan.synopsis.ui.fragment;
 
-import android.app.Dialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.TextView;
 
 import com.gmail.ivan.synopsis.R;
 import com.gmail.ivan.synopsis.mvp.contracts.SaveEditContract;
@@ -12,34 +18,51 @@ import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 
 public class SaveEditDialog extends BaseDialog<SaveEditPresenter> implements SaveEditContract.View {
 
     @Nullable
     private SaveEditDialogListener saveEditDialogListener;
 
-    @NonNull
+    @Nullable
+    private TextView saveButton;
+
+    @Nullable
+    private TextView discardButton;
+
     @Override
-    public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-        saveEditDialogListener = (ThesisDetailsFragment) getParentFragment();
+        saveEditDialogListener = (SaveEditDialogListener) getParentFragment();
+    }
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext())
-                .setTitle(R.string.save_edit_title)
-                .setPositiveButton(R.string.save_changes, (dialog, width) -> {
-                    Objects.requireNonNull(getPresenter())
-                           .saveChanges();
-                })
-                .setNegativeButton(R.string.discard_changes, (dialog, width) -> {
-                    Objects.requireNonNull(getPresenter())
-                           .discardChanges();
-                })
-                .setNeutralButton(android.R.string.cancel, (dialog, width) -> {
-                    //none
-                });
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.dialog_save_edit, container, false);
 
-        return builder.create();
+        discardButton = view.findViewById(R.id.discard_edit_button);
+        discardButton.setOnClickListener(v -> {
+            Objects.requireNonNull(getPresenter())
+                   .discardChanges();
+        });
+
+        saveButton = view.findViewById(R.id.save_edit_button);
+        saveButton.setOnClickListener(v -> {
+            Objects.requireNonNull(getPresenter())
+                   .saveChanges();
+        });
+
+        if (getDialog() != null && getDialog().getWindow() != null) {
+            getDialog().getWindow()
+                       .setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            getDialog().getWindow()
+                       .requestFeature(Window.FEATURE_NO_TITLE);
+        }
+        return view;
     }
 
     @Override

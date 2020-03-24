@@ -34,5 +34,7 @@ public interface ThesisListContract {
     interface Router extends BaseContract.Router {
 
         void openThesis(@NonNull Thesis thesis);
+
+        void openNewThesis(@NonNull String themeTitle);
     }
 }

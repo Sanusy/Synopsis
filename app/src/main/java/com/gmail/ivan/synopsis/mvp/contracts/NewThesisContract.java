@@ -1,24 +1,25 @@
 package com.gmail.ivan.synopsis.mvp.contracts;
 
+import com.gmail.ivan.synopsis.data.entity.Thesis;
+
 import androidx.annotation.NonNull;
 
-public interface NewThemeDialogContract {
+public interface NewThesisContract {
 
     interface View extends BaseContract.View {
 
-        void themeAdded();
+        void emptyTitle();
 
-        void emptyTheme();
-
-        void alreadyExist();
+        void thesisAdded();
     }
 
     interface Presenter extends BaseContract.Presenter<View> {
 
-        void addTheme(@NonNull String themeName);
+        void addThesis(@NonNull String title);
     }
 
     interface Router extends BaseContract.Router {
 
+        void openNewThesis(@NonNull Thesis thesis);
     }
 }
