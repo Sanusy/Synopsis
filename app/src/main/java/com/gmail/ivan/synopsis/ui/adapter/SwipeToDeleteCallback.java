@@ -2,7 +2,6 @@ package com.gmail.ivan.synopsis.ui.adapter;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.view.View;
 
@@ -26,11 +25,13 @@ public class SwipeToDeleteCallback extends ItemTouchHelper.SimpleCallback {
     private final Drawable icon;
 
     @NonNull
-    private final ColorDrawable background;
+    private final Drawable background;
 
     private final float density;
 
-    public SwipeToDeleteCallback(@NonNull BaseRecyclerAdapter adapter, @NonNull Context context) {
+    public SwipeToDeleteCallback(@NonNull BaseRecyclerAdapter adapter,
+                                 @NonNull Context context,
+                                 @NonNull Drawable background) {
         super(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT);
 
         this.adapter = adapter;
@@ -38,7 +39,7 @@ public class SwipeToDeleteCallback extends ItemTouchHelper.SimpleCallback {
         icon = Objects.requireNonNull(ContextCompat.getDrawable(context,
                                                                 R.drawable.ic_delete_sweep));
 
-        background = new ColorDrawable(ContextCompat.getColor(context, R.color.colorAccent));
+        this.background = background;
 
         density = context.getResources()
                          .getDisplayMetrics().density;
@@ -67,7 +68,7 @@ public class SwipeToDeleteCallback extends ItemTouchHelper.SimpleCallback {
                             boolean isCurrentlyActive) {
         super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
         View itemView = viewHolder.itemView;
-        int backgroundCornerOffset = 0;
+        int backgroundCornerOffset = Math.round(8 * density);
 
         int iconMargin = (int) (ICON_MATERIAL_MARGIN_INT * density);
         int iconTop = itemView.getTop() + (itemView.getHeight() - icon.getIntrinsicHeight()) / 2;

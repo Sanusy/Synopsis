@@ -1,9 +1,23 @@
 <resources>
 
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
+        <item name="colorPrimary">@color/primaryColor</item>
+        <item name="colorPrimaryDark">@color/primaryDarkColor</item>
+        <item name="colorSecondary">@color/secondaryColor</item>
+        <item name="colorOnSecondary">#FFFFFF</item>
+
+        <item name="snackbarButtonStyle">@style/SnackbarButtonStyle</item>
+
+        <item name="materialButtonStyle">@style/TextButtonStyle</item>
+    </style>
+
+    <style name="SnackbarButtonStyle"
+        parent="Widget.MaterialComponents.Button.TextButton.Snackbar">
+        <item name="android:textColor">#6202EE</item>
+    </style>
+
+    <style name="TextButtonStyle" parent="@style/Widget.MaterialComponents.Button.TextButton">
+        <item name="android:textColor">#6202EE</item>
     </style>
 
 </resources>

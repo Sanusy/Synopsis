@@ -57,11 +57,7 @@ public class ThesisListPresenter
 
     @Override
     public void newThesis() {
-        Thesis thesis = new Thesis(themeName);
-
-        new AddThesisTask(dataBase).execute(thesis);
-
-        getRouter().openThesis(thesis);
+        getRouter().openNewThesis(themeName);
     }
 
     @Override

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.gmail.ivan.synopsis">
 
     <application
@@ -16,11 +17,11 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.activity.ThesisListActivity"/>
+        <activity
+            android:name=".ui.activity.ThesisListActivity"
+            android:parentActivityName=".ui.activity.ThemeListActivity" />
 
-        <activity android:name=".ui.activity.ThesisPagerActivity"/>
-
-        <activity android:name=".ui.activity.ThesisEditActivity"/>
+        <activity android:name=".ui.activity.ThesisPagerActivity" />
     </application>
 
 </manifest>

@@ -24,9 +24,9 @@ public class Thesis {
     private boolean newThesis;
 
     @Ignore
-    public Thesis(@NonNull String themeName) {
+    public Thesis(@NonNull String themeName, @NonNull String thesisName) {
         this.themeName = themeName;
-        thesisName = "New thesis";
+        this.thesisName = thesisName;
         thesisDescription = "";
     }
 

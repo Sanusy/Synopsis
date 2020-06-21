@@ -24,6 +24,7 @@ import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -63,7 +64,10 @@ public class ThesisListActivity extends BaseActivity<ThesisListPresenter>
         recyclerView.setAdapter(recyclerAdapter);
 
         ItemTouchHelper itemTouchHelper =
-                new ItemTouchHelper(new SwipeToDeleteCallback(recyclerAdapter, this));
+                new ItemTouchHelper(new SwipeToDeleteCallback(recyclerAdapter, this,
+                                                              Objects.requireNonNull(ContextCompat.getDrawable(
+                                                                      this,
+                                                                      R.drawable.round_cornered_delete_background))));
         itemTouchHelper.attachToRecyclerView(recyclerView);
 
         fab = findViewById(R.id.thesis_list_fab_add);

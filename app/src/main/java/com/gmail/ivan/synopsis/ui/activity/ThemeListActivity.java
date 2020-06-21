@@ -1,5 +1,6 @@
 package com.gmail.ivan.synopsis.ui.activity;
 
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -24,6 +25,7 @@ import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -62,14 +64,18 @@ public class ThemeListActivity extends BaseActivity<ThemeListPresenter> implemen
 
         progressBar = findViewById(R.id.theme_progress_bar);
 
-        emptyListText = findViewById(R.id.empty_themelist_text);
+        emptyListText = findViewById(R.id.empty_theme_list_text);
 
         recyclerView = findViewById(R.id.theme_recycler);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerAdapter = new ThemeRecyclerAdapter(getPresenter());
         recyclerView.setAdapter(recyclerAdapter);
         ItemTouchHelper itemTouchHelper =
-                new ItemTouchHelper(new SwipeToDeleteCallback(recyclerAdapter, this));
+                new ItemTouchHelper(new SwipeToDeleteCallback(recyclerAdapter,
+                                                              this,
+                                                              new ColorDrawable(
+                                                                      ContextCompat.getColor(this,
+                                                                                             R.color.secondaryColor))));
         itemTouchHelper.attachToRecyclerView(recyclerView);
 
         fab = findViewById(R.id.theme_list_fab_add);
