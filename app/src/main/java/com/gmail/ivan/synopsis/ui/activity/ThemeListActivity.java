@@ -7,6 +7,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.gmail.ivan.synopsis.R;
+import com.gmail.ivan.synopsis.data.database.AppDataBase;
 import com.gmail.ivan.synopsis.data.database.AppDataBaseSingleton;
 import com.gmail.ivan.synopsis.data.entity.Theme;
 import com.gmail.ivan.synopsis.mvp.contracts.ThemeListContract;
@@ -53,9 +54,10 @@ public class ThemeListActivity extends BaseActivity<ThemeListPresenter> implemen
     @Override
     protected ThemeListPresenter createPresenter() {
         ThemeListRouter router = new ThemeListRouter(this);
+        AppDataBase dataBase = AppDataBaseSingleton.get(this)
+                                                   .getDataBase();
         return new ThemeListPresenter(router,
-                                      AppDataBaseSingleton.get(this)
-                                                          .getDataBase());
+                                      dataBase.themeRepository(), dataBase.thesisRepository());
     }
 
     @Override

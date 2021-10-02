@@ -17,7 +17,7 @@ public interface ThesisDetailsContract {
 
     interface Presenter extends BaseContract.Presenter<View> {
 
-        void loadThesis(int thesisId);
+        void loadThesis(int thesisId, boolean isNewThesis);
 
         void showEdit();
 

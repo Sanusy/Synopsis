@@ -91,15 +91,14 @@ public class ThesisDetailsFragment extends BaseFragment<ThesisDetailsPresenter>
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
+    public void onStart() {
+        super.onStart();
+
+        boolean newThesis = Objects.requireNonNull(getArguments())
+                                   .getBoolean(IS_NEW_THESIS);
 
         getPresenter().loadThesis(Objects.requireNonNull(getArguments())
-                                         .getInt(THESIS_ID));
-        boolean newThesis = getArguments().getBoolean(IS_NEW_THESIS);
-        if (!newThesis) {
-            getPresenter().saveChanges();
-        }
+                                         .getInt(THESIS_ID), newThesis);
     }
 
     @Override
@@ -180,11 +179,11 @@ public class ThesisDetailsFragment extends BaseFragment<ThesisDetailsPresenter>
     @Override
     protected ThesisDetailsPresenter createPresenter() {
         ThesisDetailsRouter router = new ThesisDetailsRouter(this);
-        ThesisDetailsPresenter presenter = new ThesisDetailsPresenter(router,
-                                                                      AppDataBaseSingleton.get(
-                                                                              requireContext())
-                                                                                          .getDataBase());
-        return presenter;
+        return new ThesisDetailsPresenter(router,
+                                          AppDataBaseSingleton.get(
+                                                  requireContext())
+                                                              .getDataBase()
+                                                              .thesisRepository());
     }
 
     public static ThesisDetailsFragment newInstance(int thesisId, boolean newThesis) {
