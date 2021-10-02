@@ -108,7 +108,7 @@ public class NewThemeDialog extends BaseDialog<NewThemePresenter>
         NewThemeRouter router = new NewThemeRouter();
         return new NewThemePresenter(router,
                                      AppDataBaseSingleton.get(getContext())
-                                                         .getDataBase());
+                                                         .getDataBase().themeRepository());
     }
 
     public interface NewThemeDialogListener {

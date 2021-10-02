@@ -113,7 +113,7 @@ public class ThesisListActivity extends BaseActivity<ThesisListPresenter>
         ThesisListRouter router = new ThesisListRouter(this);
         return new ThesisListPresenter(router,
                                        AppDataBaseSingleton.get(this)
-                                                           .getDataBase(),
+                                                           .getDataBase().thesisRepository(),
                                        (Objects.requireNonNull(getIntent().getStringExtra(THEME_NAME))));
     }
 

@@ -95,14 +95,14 @@ public class ThesisPagerActivity extends BaseActivity<ThesisPagerPresenter>
     @Override
     protected ThesisPagerPresenter createPresenter() {
         ThesisPagerRouter router = new ThesisPagerRouter();
-        ThesisPagerPresenter presenter = new ThesisPagerPresenter(router,
-                                                                  AppDataBaseSingleton.get(this)
-                                                                                      .getDataBase(),
-                                                                  Objects.requireNonNull(getIntent()
-                                                                                                 .getStringExtra(
-                                                                                                         THEME_NAME)));
 
-        return presenter;
+        return new ThesisPagerPresenter(router,
+                                        AppDataBaseSingleton.get(this)
+                                                            .getDataBase()
+                                                            .thesisRepository(),
+                                        Objects.requireNonNull(getIntent()
+                                                                       .getStringExtra(
+                                                                               THEME_NAME)));
     }
 
     @Override

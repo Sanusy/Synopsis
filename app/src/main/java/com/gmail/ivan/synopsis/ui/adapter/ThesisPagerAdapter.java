@@ -6,6 +6,8 @@ import com.gmail.ivan.synopsis.data.entity.Thesis;
 import com.gmail.ivan.synopsis.ui.fragment.BaseFragment;
 import com.gmail.ivan.synopsis.ui.fragment.ThesisDetailsFragment;
 
+import java.util.Objects;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -29,7 +31,7 @@ public class ThesisPagerAdapter extends BasePagerAdaper<Thesis> {
 
     @Override
     public void setPrimaryItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
-        if (currentFragment != object) {
+        if (!Objects.equals(currentFragment, object)) {
             currentFragment = (Fragment) object;
         }
         super.setPrimaryItem(container, position, object);

@@ -10,6 +10,7 @@ import android.view.Window;
 import android.widget.TextView;
 
 import com.gmail.ivan.synopsis.R;
+import com.gmail.ivan.synopsis.data.database.AppDataBase;
 import com.gmail.ivan.synopsis.data.database.AppDataBaseSingleton;
 import com.gmail.ivan.synopsis.mvp.contracts.NewThesisContract;
 import com.gmail.ivan.synopsis.mvp.presenter.NewThesisPresenter;
@@ -81,15 +82,15 @@ public class NewThesisDialog extends BaseDialog<NewThesisPresenter>
     @Override
     protected NewThesisPresenter createPresenter() {
         NewThesisRouter router = new NewThesisRouter(requireBaseActivity());
-        NewThesisPresenter presenter = new NewThesisPresenter(router,
-                                                              AppDataBaseSingleton.get(
-                                                                      requireContext())
-                                                                                  .getDataBase(),
-                                                              Objects.requireNonNull(Objects.requireNonNull(
+        AppDataBase dataBase = AppDataBaseSingleton.get(
+                requireContext())
+                                                   .getDataBase();
+        return new NewThesisPresenter(router,
+                                      dataBase.thesisRepository(),
+                                      Objects.requireNonNull(Objects.requireNonNull(
                                                                       getArguments())
                                                                                             .getString(
                                                                                                     THEME_NAME)));
-        return presenter;
     }
 
     public static NewThesisDialog newInstance(@NonNull String themeName) {
